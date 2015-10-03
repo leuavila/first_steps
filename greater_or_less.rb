@@ -3,11 +3,11 @@ def welcome_player
 
 	puts "Qual é o seu nome?"
 
-	name = gets
+	name = gets.strip
 
 	puts "\n\n\n"
 
-	puts "Começaremos um jogo para você," + name + "."
+	puts "Começaremos um jogo para você, #{name}."
 
 	puts "\n\n\n\n"
 end
@@ -22,14 +22,16 @@ def choose_number
 	secret_number
 end
 	
-def ask_a_number(attempt, chances)
-	puts "Tentativa " + attempt.to_s + " de " + chances.to_s + "."
+def ask_a_number(attempt, chances, shots)
+	puts "Tentativa #{attempt} de #{chances}"
 		
-	puts "Entre com um número:"
+	puts "Números tentados: #{shots}"
+
+	puts "Entre com um número: "
 		
-	answer = gets
+	answer = gets.strip
 		
-	puts "Você chutou:" + answer + "."
+	puts "Você chutou: #{answer}"
 	
 	answer
 end	
@@ -59,9 +61,11 @@ welcome_player
 secret_number = choose_number
 
 chances = 5
+shots = []
 
 for attempt in 1..chances
-	answer = ask_a_number(attempt, chances)
-	
+	answer = ask_a_number(attempt, chances, shots)
+	shots << answer
+
 	break if verification(secret_number, answer)
 end
