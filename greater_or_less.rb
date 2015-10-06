@@ -15,7 +15,7 @@ end
 def choose_number
 	puts "Escolhendo um número entre 0 e 200..."
 
-	secret_number = 175
+	secret_number = rand(200)
 
 	puts "Escolhido! Que tal advinhar o número?"
 
@@ -62,10 +62,15 @@ secret_number = choose_number
 
 chances = 5
 shots = []
+total_points = 1000
 
 for attempt in 1..chances
-	answer = ask_a_number(attempt, chances, shots)
-	shots << answer
+	shots << answer = ask_a_number(attempt, chances, shots)
+	
+	lost_points = (answer.to_i - secret_number) / 2.0
+	total_points -= lost_points.abs
+		
+	puts "Você tem #{total_points}."
 
 	break if verification(secret_number, answer)
 end
