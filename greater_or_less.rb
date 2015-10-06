@@ -1,76 +1,73 @@
+def break_line
+  puts "\n"
+end
+
 def welcome_player
-	puts "Seja bem vindo ao jogo da advinhação."
+  puts "Seja bem vindo ao jogo da advinhação."
 
-	puts "Qual é o seu nome?"
+  print "Digite seu nome: "
 
-	name = gets.strip
+  name = gets.strip
 
-	puts "\n\n\n"
+  break_line
 
-	puts "Começaremos um jogo para você, #{name}."
+  puts "Começaremos um jogo para você, #{name}."
 
-	puts "\n\n\n\n"
+  break_line
 end
 
 def choose_number
-	puts "Escolhendo um número entre 0 e 200..."
+  puts "Escolhendo um número entre 0 e 200..."
 
-	secret_number = rand(200)
+  secret_number = rand(200)
 
-	puts "Escolhido! Que tal advinhar o número?"
+  puts "Escolhido! Que tal advinhar o número?"
 
-	secret_number
+  break_line
+
+  secret_number
 end
-	
+  
 def ask_a_number(attempt, chances, shots)
-	puts "Tentativa #{attempt} de #{chances}"
-		
-	puts "Números tentados: #{shots}"
+  puts "Tentativa #{attempt} de #{chances} (Números tentados: #{shots})"
+    
+  print "Entre com um número: "
+    
+  answer = gets.strip.to_i
+    
+  puts "Você chutou o número #{answer}!"
 
-	puts "Entre com um número: "
-		
-	answer = gets.strip
-		
-	puts "Você chutou: #{answer}"
-	
-	answer
-end	
+  break_line
+  
+  answer
+end 
 
 def verification(secret_number, answer)
-	right = secret_number == answer.to_i
-		
-	if right
-		puts "Acertou!"
-	
-		return true
-	else
-		greater = secret_number > answer.to_i
-		
-		if greater 
-			puts "O número secreto é maior."
-		else
-			puts "O número secreto é menor."
-		end	
-		
-		false
-	end
+  if result = secret_number == answer
+    puts "Acertou!"
+  else
+    puts "O número secreto é #{secret_number > answer ? 'maior' : 'menor'}!"
+  end
+
+  break_line
+
+  result
 end
 
 welcome_player
 
 secret_number = choose_number
-
-chances = 5
-shots = []
-total_points = 1000
+shots         = []
+chances       = 5
+total_points  = 1000
 
 for attempt in 1..chances
-	shots << answer = ask_a_number(attempt, chances, shots)
-	
-	lost_points = (answer.to_i - secret_number) / 2.0
-	total_points -= lost_points.abs
-		
-	puts "Você tem #{total_points}."
+  shots << answer = ask_a_number(attempt, chances, shots)
+  
+  lost_points   = (answer - secret_number) / 2.0
+  total_points -= lost_points.abs
+    
+  puts "Você tem #{total_points} pontos."
 
-	break if verification(secret_number, answer)
+  break if verification(secret_number, answer)
 end
