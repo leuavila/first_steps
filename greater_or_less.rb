@@ -17,20 +17,19 @@ def welcome_player
 end
 
 def choose_number(difficulty)
-   
   case difficulty
   when 1
-  	max = 30
+    max = 30
   when 2
-  	max = 60
+    max = 60
   when 3
-  	max = 100
+    max = 100
   when 4
-  	max = 150
+    max = 150
   else
-  	max = 200
+    max = 200
   end
-  	 			
+
   puts "Escolhendo um número entre 0 e #{max}..."
 
   secret_number = rand(max) + 1
@@ -41,20 +40,20 @@ def choose_number(difficulty)
 
   secret_number
 end
-  
+
 def ask_a_number(attempt, chances, shots)
   puts "Tentativa #{attempt} de #{chances} (Números tentados: #{shots})"
-    
+
   print "Entre com um número: "
-    
+
   answer = gets.strip.to_i
-    
+
   puts "Você chutou o número #{answer}!"
 
   break_line
-  
+
   answer
-end 
+end
 
 def verification(secret_number, answer)
   if result = secret_number == answer
@@ -69,9 +68,9 @@ def verification(secret_number, answer)
 end
 
 def difficulty
-	print "De 1 a 5, selecione a difculdade desejada: "
-	
-	level = gets.strip.to_i
+  print "De 1 a 5, selecione a difculdade desejada: "
+
+  level = gets.strip.to_i
 end
 
 welcome_player
@@ -84,7 +83,7 @@ total_points  = 1000
 
 for attempt in 1..chances
   shots << answer = ask_a_number(attempt, chances, shots)
-  
+
   lost_points   = (answer - secret_number) / 2.0
   total_points -= lost_points.abs
     
