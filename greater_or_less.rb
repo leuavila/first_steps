@@ -16,10 +16,24 @@ def welcome_player
   break_line
 end
 
-def choose_number
-  puts "Escolhendo um número entre 0 e 200..."
+def choose_number(difficulty)
+   
+  case difficulty
+  when 1
+  	max = 30
+  when 2
+  	max = 60
+  when 3
+  	max = 100
+  when 4
+  	max = 150
+  else
+  	max = 200
+  end
+  	 			
+  puts "Escolhendo um número entre 0 e #{max}..."
 
-  secret_number = rand(200)
+  secret_number = rand(max) + 1
 
   puts "Escolhido! Que tal advinhar o número?"
 
@@ -54,9 +68,16 @@ def verification(secret_number, answer)
   result
 end
 
+def difficulty
+	print "De 1 a 5, selecione a difculdade desejada: "
+	
+	level = gets.strip.to_i
+end
+
 welcome_player
 
-secret_number = choose_number
+level         = difficulty
+secret_number = choose_number(level)
 shots         = []
 chances       = 5
 total_points  = 1000
