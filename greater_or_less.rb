@@ -17,18 +17,7 @@ def welcome_player
 end
 
 def choose_number(difficulty)
-  case difficulty
-  when 1
-    max = 30
-  when 2
-    max = 60
-  when 3
-    max = 100
-  when 4
-    max = 150
-  else
-    max = 200
-  end
+  max = {'1' => 30, '2' => 60, '3' => 100, '4' => 150}[difficulty.to_s]
 
   puts "Escolhendo um número entre 0 e #{max}..."
 
@@ -56,10 +45,10 @@ def ask_a_number(attempt, chances, shots)
 end
 
 def verification(secret_number, answer)
-  if result = secret_number == answer
-    puts "Acertou!"
+  puts message = if result = secret_number == answer
+    "Acertou!"
   else
-    puts "O número secreto é #{secret_number > answer ? 'maior' : 'menor'}!"
+    "O número secreto é #{secret_number > answer ? 'maior' : 'menor'}!"
   end
 
   break_line
