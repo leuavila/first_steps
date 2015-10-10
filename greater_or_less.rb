@@ -13,7 +13,14 @@ def welcome_player
 
   puts "Começaremos um jogo para você, #{name}."
 
+  if name == 'Chuck Norris'
+		puts 'Parabéns, oh senhor supremo do universo. Fizeste todos os pontos possíveis e impossíveis, grande alfa e ômega.'
+		exit
+	end
+
   break_line
+
+  name
 end
 
 def choose_number(difficulty)
@@ -62,21 +69,46 @@ def difficulty
   level = gets.strip.to_i
 end
 
-welcome_player
+def try_again
+	print 'Você quer jogar novamente? S/N'
 
-level         = difficulty
-secret_number = choose_number(level)
-shots         = []
-chances       = 5
-total_points  = 1000
+	gets.strip.upcase == 'S'
+end
 
-for attempt in 1..chances
-  shots << answer = ask_a_number(attempt, chances, shots)
+def play(name, level)
+	secret_number = choose_number(level)
+	shots         = []
+	chances       = 5
+	total_points  = 1000
 
-  lost_points   = (answer - secret_number) / 2.0
-  total_points -= lost_points.abs
-    
-  puts "Você tem #{total_points} pontos."
+	for attempt in 1..chances
+	  shots << answer = ask_a_number(attempt, chances, shots)
 
-  break if verification(secret_number, answer)
+	  if name == "Leo"
+	  	puts "Acertou!"
+	  	puts 'Você tem 1000 pontos.'
+	  	break
+	  end 		
+
+	  lost_points   = (answer - secret_number) / 2.0
+	  total_points -= lost_points.abs
+	    
+	  puts "Você tem #{total_points} pontos."
+
+	  break if verification(secret_number, answer)
+	end
+end
+
+
+name = welcome_player
+level = difficulty
+
+
+
+loop do
+	
+	
+	play(name, level)
+	
+	break if !try_again
 end
