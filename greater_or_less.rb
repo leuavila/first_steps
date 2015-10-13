@@ -1,4 +1,6 @@
-require File.expand_path('../helper_methods.rb', __FILE__)
+# encoding: UTF-8
+
+require File.expand_path('../helpers/helper_methods.rb', __FILE__)
 
 name  = welcome_player
 level = ask_a_difficulty

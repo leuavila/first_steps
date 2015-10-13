@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 def break_line
   puts "\n"
 end
