@@ -26,7 +26,7 @@ def welcome_player
 end
 
 def ask_a_difficulty
-  print 'De 1 a 5, selecione a difculdade desejada: '
+  print "De 1 a 5, selecione a difculdade desejada.\n(1) Muito Fácil (2) Fácil (3) Normal (4) Difícil (5) Impossível"
 
   gets.strip.to_i
 end
@@ -36,7 +36,7 @@ def choose_number(difficulty)
 
   puts "Escolhendo um número entre 0 e #{max}..."
 
-  secret_number = rand(max) + 1
+  puts secret_number = rand(max) + 1
 
   puts 'Escolhido! Que tal advinhar o número?'
 
@@ -93,12 +93,12 @@ def play_with(name, level)
 
       break_line
 
-      break
+      break 
     end
 
     lost_points   = (answer - secret_number) / 2.0
     total_points -= lost_points.abs
-      
+
     puts "Você tem #{total_points} pontos."
 
     break if verification(secret_number, answer)
