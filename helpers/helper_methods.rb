@@ -36,7 +36,7 @@ def choose_number(difficulty)
 
   puts "Escolhendo um número entre 0 e #{max}..."
 
-  secret_number = rand(max) + 1
+  puts secret_number = rand(max) + 1
 
   puts 'Escolhido! Que tal advinhar o número?'
 
@@ -113,6 +113,10 @@ def play_with(name, level)
       end
     end
 
-    break if verification(secret_number, answer)
+    return true if verification(secret_number, answer)
   end
+  
+  puts 'Loser.'
+  
+  false
 end
