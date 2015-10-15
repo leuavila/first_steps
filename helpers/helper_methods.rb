@@ -26,17 +26,17 @@ def welcome_player
 end
 
 def ask_a_difficulty
-  print "De 1 a 5, selecione a difculdade desejada.\n(1) Muito Fácil (2) Fácil (3) Normal (4) Difícil (5) Impossível"
+  print "De 1 a 5, selecione a difculdade desejada [(1) Muito Fácil (2) Fácil (3) Normal (4) Difícil (5) Impossível]: "
 
   gets.strip.to_i
 end
 
 def choose_number(difficulty)
-  max = {'1' => 30, '2' => 60, '3' => 100, '4' => 150}[difficulty.to_s]
+  max = {'1' => 30, '2' => 60, '3' => 100, '4' => 150, '5' => 200}[difficulty.to_s]
 
   puts "Escolhendo um número entre 0 e #{max}..."
 
-  puts secret_number = rand(max) + 1
+  secret_number = rand(max) + 1
 
   puts 'Escolhido! Que tal advinhar o número?'
 
@@ -46,11 +46,15 @@ def choose_number(difficulty)
 end
 
 def ask_a_number(attempt, chances, shots)
-  puts "Tentativa #{attempt} de #{chances} (Números tentados: #{shots})"
+  puts "Tentativa #{attempt} de 5 (Números tentados: #{shots})"
 
   print 'Entre com um número: '
 
-  answer = gets.strip.to_i
+  while shots.include?(answer = gets.strip.to_i)
+    print 'Você já tentou este número. Tente outro: '
+
+    next
+  end
 
   puts "Você chutou o número #{answer}!"
 
@@ -82,7 +86,7 @@ end
 def play_with(name, level)
   secret_number = choose_number(level)
   shots         = []
-  chances       = 5
+  chances       = 6
   total_points  = 1000
 
   for attempt in 1..chances
@@ -93,13 +97,21 @@ def play_with(name, level)
 
       break_line
 
-      break 
+      break
     end
 
     lost_points   = (answer - secret_number) / 2.0
     total_points -= lost_points.abs
 
     puts "Você tem #{total_points} pontos."
+
+    if attempt == 5
+      if (secret_number - shots[4]).abs == 1
+        puts 'Você errou por 1 e ganhou mais uma chance'
+      else
+        break
+      end
+    end
 
     break if verification(secret_number, answer)
   end
