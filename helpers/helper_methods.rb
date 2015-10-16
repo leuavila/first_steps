@@ -17,6 +17,7 @@ def welcome_player
 
   if name == 'Chuck Norris'
     puts 'Parabéns, oh senhor supremo do universo. Fizeste todos os pontos possíveis e impossíveis, grande alfa e ômega.'
+
     exit
   end
 
@@ -36,7 +37,7 @@ def choose_number(difficulty)
 
   puts "Escolhendo um número entre 0 e #{max}..."
 
-  puts secret_number = rand(max) + 1
+  secret_number = rand(max) + 1
 
   puts 'Escolhido! Que tal advinhar o número?'
 
@@ -97,7 +98,7 @@ def play_with(name, level)
 
       break_line
 
-      break
+      return true
     end
 
     lost_points   = (answer - secret_number) / 2.0
@@ -107,7 +108,7 @@ def play_with(name, level)
 
     if attempt == 5
       if (secret_number - shots[4]).abs == 1
-        puts 'Você errou por 1 e ganhou mais uma chance'
+        puts 'Você errou por 1 e ganhou mais uma chance!'
       else
         break
       end
@@ -116,7 +117,7 @@ def play_with(name, level)
     return true if verification(secret_number, answer)
   end
   
-  puts 'Loser.'
+  puts 'Loser!'
   
   false
 end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-require 'rubygems'
-require 'pry'
+# require 'rubygems'
+# require 'pry'
 
 require File.expand_path('../helpers/helper_methods.rb', __FILE__)
 
@@ -19,5 +19,5 @@ loop do
 
   break if not try_again?
 end
-#binding.pry
-puts "Fim de jogo. Seu aproveitamento é #{count[:hits].to_i}/#{count[:tries].to_i} (#{(count[:hits] / count[:tries]) * 100.0}%)!"
+
+puts "Fim de jogo! Seu aproveitamento é #{count[:hits].to_i}/#{count[:tries].to_i} (#{(count[:hits] / count[:tries]) * 100.0}%)!"
