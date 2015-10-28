@@ -30,8 +30,8 @@ def choose_word
   secret_word
 end
 
-def ask (tries, misses)
-  puts " Você tentou as letras #{tries} e tem #{points} pontos até agora"
+def ask(tries, misses)
+  puts "Você tentou as letras #{tries} e tem #{points} pontos até agora"
 
   break_line
 
@@ -42,10 +42,13 @@ def ask (tries, misses)
   puts "Você chutou #{try}."
 
   break_line
+
+  try
 end
 
 # def verification (secret_word, ask)
 #   single_word = try.size == 1
+# end
 
 def try_again?
   print 'Você quer jogar novamente? [S/n] '
@@ -55,11 +58,11 @@ def try_again?
   input.upcase == 'S' || input == ''
 end
 
-def play (welcome_player)
+def play(welcome_player)
   secret_word = choose_word
 
+  tries  = []
   misses = 0
-  tries = []
   points = 0
 
   while misses < 5
@@ -70,29 +73,30 @@ def play (welcome_player)
   single_word = try.size == 1
 
   if single_word
+    # Put something here or review the entire condition...
+  else 
+    bingo = try == secret_word
 
-    else 
-      bingo = try == secret_word
+    if bingo
+      puts 'Acertou mizeravi!'
+  
+      points += 100
+  
+      break
+    else
+      puts "You tried..."
 
-      if bingo
-    
-        puts 'Acertou mizeravi!'
-    
-        points += 100
-    
-        break
-      else
-        puts "You tried..."
+      points -= 30
 
-        points -= 30
-
-        misses += 1
-      end
+      misses += 1
+    end
   end
+
   puts "Você fez #{points} pontos !"
+end
 
 loop do
   play_with name, level
 
   break if not try_again?
-  
+end
