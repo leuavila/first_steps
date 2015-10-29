@@ -30,7 +30,7 @@ def choose_word
   secret_word
 end
 
-def ask(tries, misses)
+def ask(tries, points)
   puts "Você tentou as letras #{tries} e tem #{points} pontos até agora"
 
   break_line
@@ -45,10 +45,6 @@ def ask(tries, misses)
 
   try
 end
-
-# def verification (secret_word, ask)
-#   single_word = try.size == 1
-# end
 
 def try_again?
   print 'Você quer jogar novamente? [S/n] '
@@ -73,7 +69,23 @@ def play(welcome_player)
   single_word = try.size == 1
 
   if single_word
-    # Put something here or review the entire condition...
+    letters_found = 0
+
+    for i in 0..(secret_word.size - 1)
+      letter = secret_word[i]
+      if letter == try
+        letters_found += 1
+      end
+    end
+
+    if letters_found == 0
+      
+      puts 'Letra não encontrada.'
+
+      misses += 1
+    else
+      puts "Letra encontrada #{letters_found} vezes!"
+    end
   else 
     bingo = try == secret_word
 
@@ -82,7 +94,6 @@ def play(welcome_player)
   
       points += 100
   
-      break
     else
       puts "You tried..."
 
@@ -96,7 +107,7 @@ def play(welcome_player)
 end
 
 loop do
-  play_with name, level
+  play welcome_player
 
   break if not try_again?
 end
