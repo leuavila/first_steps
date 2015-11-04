@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-# require 'rubygems'
-# require 'pry'
+require 'rubygems'
+require 'pry'
 
 def break_line
   puts "\n"
@@ -36,19 +36,38 @@ def choose_word
 end
 
 def ask(tries, score)
-  puts "Você tentou as letras #{tries} e tem #{score} pontos até agora"
+  puts "Você tentou as letras #{tries} e tem #{score} pontos até agora!"
 
   break_line
 
   print "Entre com uma letra ou palavra: "
 
-  try = gets.strip
+  letter = gets.strip
 
-  puts "Você chutou #{try}!"
+  puts "Você chutou #{letter}!"
 
   break_line
 
-  try
+  letter
+end
+
+def verifying_letters(secret_word, letter_tried)
+  found = false
+
+  for i in 0..(secret_word.size - 1)
+    if secret_word[i] == letter_tried
+      found = true
+      break
+    end
+  end
+
+  if found
+    puts 'Letra encontrada!'
+  else
+    puts "Letra não encontrada!"
+  end
+
+  found  
 end
 
 def try_again?
@@ -67,37 +86,11 @@ def play!
   score  = 0
 
   while misses < 5
-    tries << try = ask(tries, misses)
-  end
+    tries << letter_tried = ask(tries, score)
 
-  if try.size == 1
-    letters_found = 0
-
-    for i in 0..(secret_word.size - 1)
-      letter = secret_word[i]
-
-      letters_found += 1 if letter == try
-    end
-
-    if letters_found == 0
-      puts 'Letra não encontrada!'
-
-      misses += 1
+    if verifying_letters(secret_word, letter_tried)
+      score += 1
     else
-      puts "Letra encontrada #{letters_found} vezes!"
-    end
-  else 
-    bingo = try == secret_word
-
-    if bingo
-      puts 'Acertou, mizeravi!'
-  
-      score += 100
-      else
-      puts "You tried..."
-
-      score -= 30
-
       misses += 1
     end
   end
