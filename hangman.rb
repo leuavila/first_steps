@@ -1,7 +1,11 @@
 # encoding: UTF-8
 
-require 'rubygems'
-require 'pry'
+# require 'rubygems'
+# require 'pry'
+
+$tries  = []
+$score  = 0
+$misses = 0
 
 def break_line
   puts "\n"
@@ -42,14 +46,20 @@ def ask(tries, score)
 
   print "Entre com uma letra ou palavra: "
 
-  letter = gets.strip
+  shot = gets.strip
 
-  puts "Você chutou #{letter}!"
+  puts "Você chutou #{shot}!"
 
   break_line
 
-  letter
+  shot
 end
+
+def refresh_stats!(miss, score)
+  $misses += 1 if miss
+
+  $score += score
+end  
 
 def verifying_letters(secret_word, letter_tried)
   found = false
@@ -63,12 +73,36 @@ def verifying_letters(secret_word, letter_tried)
 
   if found
     puts 'Letra encontrada!'
+
+    refresh_stats!(false, 10)
   else
     puts "Letra não encontrada!"
+
+    refresh_stats!(true, -10)
   end
 
   found  
 end
+
+def verifying_word(secret_word, word_tried)
+  if result = secret_word == word_tried
+    refresh_stats!(false, 100)
+  else
+    refresh_stats!(true, -100)
+  end
+
+  result
+end
+
+def letter_or_word(secret_word, shot)
+  if shot.size == 1
+    verifying_letters(secret_word, shot)
+  else
+    verifying_word(secret_word, shot)
+
+    throw :test
+  end
+end  
 
 def try_again?
   print 'Você quer jogar novamente? [S/n] '
@@ -81,21 +115,15 @@ end
 def play!
   secret_word = choose_word
 
-  tries  = []
-  misses = 0
-  score  = 0
+  catch :test do
+    while $misses < 5
+      $tries << shot = ask($tries, $score)
 
-  while misses < 5
-    tries << letter_tried = ask(tries, score)
-
-    if verifying_letters(secret_word, letter_tried)
-      score += 1
-    else
-      misses += 1
+      letter_or_word(secret_word, shot)
     end
   end
-
-  puts "Você fez #{score} pontos!"
+  
+  puts "Você fez #{$score} pontos!"
 end
 
 welcome_player
@@ -105,3 +133,4 @@ loop do
 
   break if not try_again?
 end
+
